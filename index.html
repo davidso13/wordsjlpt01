@@ -158,8 +158,8 @@ h2.settitle { font-size: 20px; margin: 22px 0 4px; letter-spacing: -.02em; text-
 .qcard { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 26px 18px; text-align: center; box-shadow: var(--shadow); }
 .qtype { font-size: 12px; font-weight: 700; color: var(--ai); letter-spacing: .06em; }
 .qprompt { margin: 12px 0 4px; font-size: 40px; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
-.qprompt.ko { font-family: var(--f-ui); font-size: 28px; }
 .qprompt.sent { font-family: var(--f-kana); font-size: 21px; font-weight: 500; }
+.qprompt.sent mark { background: var(--ai-soft); color: var(--ai); font-family: var(--f-jp); font-weight: 800; padding: 0 3px; border-radius: 4px; text-decoration: underline; text-underline-offset: 4px; }
 .qnote { color: var(--muted); font-size: 13px; margin: 0; }
 .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
 .opt { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 14px 10px; font-size: 16px; font-weight: 500; text-align: left; display: flex; gap: 8px; align-items: center; min-width: 0; }
@@ -341,29 +341,28 @@ function pickFrom(pool, n, correct) {
   for (const x of shuffle(pool)) { if (x !== correct && !out.includes(x)) out.push(x); if (out.length === n) break; }
   return out;
 }
-function makeQ(id, type) {
+// 모든 문제는 일본어 단어(한자)를 보여주고 한국어 뜻을 고르는 형식. 같은 단어가 세 번, 보기 구성만 달리 나온다.
+function makeQ(id, type, setIds) {
   const w = W[id];
-  let prompt, answer, pool, optClass = '', promptClass = 'jp', label, note = '';
-  if (type === 'meaning') {
-    label = '뜻 고르기'; prompt = w.w; answer = w.m; pool = WORDS.map(x => x.m); note = '알맞은 뜻을 고르세요';
-  } else if (type === 'word') {
-    label = '단어 고르기'; prompt = w.m; promptClass = 'ko'; answer = w.w; pool = WORDS.map(x => x.w); optClass = 'jpopt'; note = '이 뜻의 일본어는?';
-  } else if (type === 'reading') {
-    label = '읽기 고르기'; prompt = w.w; answer = w.r; optClass = 'kanaopt'; note = '후리가나를 고르세요';
-    const others = WORDS.filter(x => !isKana(x.w) && x.no !== id);
-    const near = others.filter(x => Math.abs(x.r.length - w.r.length) <= 1).map(x => x.r);
-    pool = near.length >= 3 ? near : others.map(x => x.r);
+  const answer = w.m;
+  let label, note, sentence = null, pool;
+  if (type === 'context') {
+    label = '예문 속 뜻'; note = '밑줄 친 단어의 뜻은?'; sentence = w.ex;
+    pool = WORDS.filter(x => x.day === w.day).map(x => x.m);
+  } else if (type === 'set') {
+    label = '헷갈리는 보기'; note = '같은 세트 단어 중에서 골라 보세요';
+    pool = setIds.length >= 4 ? setIds.map(x => W[x].m) : WORDS.map(x => x.m);
   } else {
-    label = '빈칸 채우기'; prompt = w.ex.replace(w.w, '（　　　）'); promptClass = 'sent'; answer = w.w;
-    pool = WORDS.map(x => x.w); optClass = 'jpopt'; note = w.ko.replace(w.m.split(/[,;]/)[0].trim(), '___');
+    label = '뜻 고르기'; note = '알맞은 한국어 뜻을 고르세요';
+    pool = WORDS.map(x => x.m);
   }
   const opts = shuffle([answer, ...pickFrom(pool, 3, answer)]);
-  return {id, type, label, prompt, promptClass, note, opts, answer, optClass, picked: null};
+  return {id, type, label, prompt: w.w, sentence, note, opts, answer, picked: null};
 }
 function buildQuiz(ids) {
   const qs = [];
   for (const id of ids) {
-    qs.push(makeQ(id, 'meaning'), makeQ(id, 'word'), makeQ(id, isKana(W[id].w) ? 'cloze' : 'reading'));
+    qs.push(makeQ(id, 'meaning', ids), makeQ(id, 'context', ids), makeQ(id, 'set', ids));
   }
   // spread the three questions of the same word apart
   let best = shuffle(qs);
@@ -519,12 +518,14 @@ function viewQuiz() {
     <div class="bar"><i style="width:${((z.i + (answered ? 1 : 0)) / n) * 100}%"></i></div>
     <div class="qcard">
       <div class="qtype">${q.label}</div>
-      <div class="qprompt ${q.promptClass}" ${q.promptClass !== 'ko' ? 'lang="ja"' : ''}>${esc(q.prompt)}</div>
+      ${q.sentence
+        ? `<div class="qprompt sent" lang="ja">${esc(q.sentence).replace(esc(q.prompt), `<mark>${esc(q.prompt)}</mark>`)}</div>`
+        : `<div class="qprompt jp" lang="ja">${esc(q.prompt)}</div>`}
       <p class="qnote">${esc(q.note)}</p>
     </div>
     <div class="opts">${q.opts.map((o, i) => {
       const cls = answered ? (o === q.answer ? ' right' : o === q.picked ? ' wrong' : '') : '';
-      return `<button class="opt ${q.optClass}${cls}" data-act="answer" data-i="${i}" ${answered ? 'disabled' : ''}><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`;
+      return `<button class="opt${cls}" data-act="answer" data-i="${i}" ${answered ? 'disabled' : ''}><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`;
     }).join('')}</div>
     ${answered ? `<div class="feedback ${right ? 'good' : 'bad'}">${right ? '정답이에요!' : '아쉬워요.'}
       <span class="jp" lang="ja">${esc(w.w)}</span> (<span lang="ja">${esc(w.r)}</span>) = ${esc(w.m)}</div>
@@ -542,7 +543,7 @@ function viewResult() {
     <form class="cmd" data-form="next"><input id="nextInput" autocomplete="off" placeholder="다음" aria-label="코치에게 말하기"><button class="btn" type="submit">보내기</button></form>
     <div class="actions"><button class="btn" data-act="nextSet">${isLast ? `${S.round}회독 마무리하기` : '다음 세트로'}</button></div>
     ${r.wrong.length ? `<div class="list"><h3>틀린 문제 ${r.wrong.length}개</h3>${r.wrong.map(q =>
-      `<div class="miss"><span class="q">${esc(q.label)} · <span lang="ja">${esc(q.prompt)}</span></span><span class="a">정답 <b lang="ja">${esc(q.answer)}</b><s lang="ja">${esc(q.picked)}</s></span></div>`).join('')}</div>` : ''}`;
+      `<div class="miss"><span class="q">${esc(q.label)} · <span lang="ja">${esc(q.prompt)}</span></span><span class="a">정답 <b>${esc(q.answer)}</b><s>${esc(q.picked)}</s></span></div>`).join('')}</div>` : ''}`;
 }
 
 function viewRoundEnd() {
