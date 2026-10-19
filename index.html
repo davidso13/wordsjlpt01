@@ -205,7 +205,7 @@ h2.settitle { font-size: 20px; margin: 22px 0 4px; letter-spacing: -.02em; text-
 
 /* tabs */
 .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
-.tabs .in { max-width: 540px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+.tabs .in { max-width: 540px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
 .tab { border: 0; background: transparent; padding: 10px 4px 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; color: var(--muted); position: relative; }
 .tab svg { width: 22px; height: 22px; }
 .tab[aria-current="page"] { color: var(--ai); font-weight: 700; }
@@ -229,6 +229,61 @@ h2.settitle { font-size: 20px; margin: 22px 0 4px; letter-spacing: -.02em; text-
   .view { animation: rise .28s ease-out; }
   @keyframes rise { from { transform: translateY(6px); opacity: .6; } to { transform: none; opacity: 1; } }
 }
+
+/* home: 차수 선택 */
+.decks { display: grid; gap: 10px; margin-top: 4px; }
+.deck { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 16px; display: grid; gap: 10px; min-width: 0; }
+.deck-main { display: flex; gap: 14px; align-items: center; border: 0; background: transparent; padding: 0; text-align: left; width: 100%; min-width: 0; }
+.deck-seal { flex: none; width: 52px; height: 52px; border-radius: 12px; background: var(--ai-soft); color: var(--ai); display: grid; place-items: center; font-family: var(--f-jp); font-weight: 800; font-size: 22px; }
+.deck.photo .deck-seal { background: var(--hard-soft); color: var(--hard); }
+.deck-info { min-width: 0; flex: 1; display: grid; gap: 2px; }
+.deck-info b { font-size: 18px; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.deck-info small { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.deck-go { flex: none; color: var(--ai); font-weight: 700; font-size: 14px; }
+.deck-prog { display: flex; gap: 4px; align-items: center; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.deck-prog i { width: 18px; height: 5px; border-radius: 3px; background: var(--line); }
+.deck-prog i.on { background: var(--stamp); }
+.deck-prog span { margin-left: 6px; }
+.deck-tools { display: flex; gap: 6px; flex-wrap: wrap; border-top: 1px dashed var(--line); padding-top: 10px; }
+.linkbtn { border: 0; background: transparent; color: var(--muted); font-size: 13px; padding: 4px 6px; border-radius: 8px; }
+.linkbtn:hover { color: var(--ai); background: var(--ai-soft); }
+.linkbtn.del:hover { color: var(--bad); background: var(--bad-soft); }
+.inline { display: flex; gap: 8px; width: 100%; }
+.inline input, .field input, .field textarea { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; padding: 10px 12px; font: inherit; }
+.newdeck { margin-top: 14px; border: 1.5px dashed var(--ai); background: var(--ai-soft); color: var(--ai); border-radius: var(--r); padding: 16px; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font-weight: 700; }
+.newdeck svg { flex: none; }
+.newdeck small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 2px; }
+.loading { color: var(--muted); text-align: center; padding: 30px 0; }
+
+/* upload: 사진으로 새 차수 */
+.field { display: grid; gap: 6px; margin-top: 14px; }
+.field > span { font-size: 13px; font-weight: 700; }
+.field > small { color: var(--muted); font-size: 12px; }
+.drop { margin-top: 14px; border: 1.5px dashed var(--line); border-radius: var(--r); background: var(--surface); padding: 24px 16px; text-align: center; display: grid; gap: 6px; justify-items: center; cursor: pointer; color: var(--muted); }
+.drop:hover, .drop:focus-within { border-color: var(--ai); color: var(--ai); }
+.drop b { color: var(--ink); font-size: 15px; }
+.drop input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; margin-top: 12px; }
+.thumb { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb button { position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border-radius: 50%; border: 0; background: rgba(10,12,20,.6); color: #fff; font-size: 14px; line-height: 1; }
+.status { margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 14px; background: var(--ai-soft); color: var(--ai); }
+.status.err { background: var(--bad-soft); color: var(--bad); }
+.spin { display: inline-block; width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; vertical-align: -2px; margin-right: 6px; }
+@media (prefers-reduced-motion: no-preference) { .spin { animation: spin .8s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } } }
+.edits { display: grid; gap: 8px; margin-top: 12px; }
+.edit { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: grid; grid-template-columns: 28px repeat(3, minmax(0, 1fr)) 30px; gap: 6px; align-items: center; }
+.edit .n { color: var(--muted); font-size: 12px; text-align: center; font-variant-numeric: tabular-nums; }
+.edit input { min-width: 0; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 8px; padding: 8px; font: inherit; font-size: 14px; }
+.edit input.jp { font-family: var(--f-jp); font-weight: 800; }
+.edit input.ex { grid-column: 2 / 5; font-size: 12px; color: var(--muted); }
+.edit .x { border: 0; background: transparent; color: var(--muted); font-size: 18px; border-radius: 8px; height: 30px; }
+.edit .x:hover { color: var(--bad); background: var(--bad-soft); }
+@media (max-width: 440px) {
+  .edit { grid-template-columns: 24px minmax(0, 1fr) minmax(0, 1fr) 28px; }
+  .edit input.mean { grid-column: 2 / 4; grid-row: 2; }
+  .edit input.ex { grid-column: 2 / 4; grid-row: 3; }
+}
 </style>
 </head>
 <body>
@@ -236,93 +291,105 @@ h2.settitle { font-size: 20px; margin: 22px 0 4px; letter-spacing: -.02em; text-
   <header class="top" id="top"></header>
   <main id="main"></main>
 </div>
-<nav class="tabs" aria-label="메뉴"><div class="in" id="tabs"></div></nav>
+<nav class="tabs" aria-label="메뉴" id="tabnav"><div class="in" id="tabs"></div></nav>
 <div class="sheet" id="sheet" hidden></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
-const WORDS = [
-  {no:26,day:2,w:'住所',r:'じゅうしょ',m:'주소',ex:'ここに住所を書いてください。',ko:'여기에 주소를 써 주세요.'},
-  {no:27,day:2,w:'近所',r:'きんじょ',m:'이웃, 근처',ex:'近所に新しいコンビニができました。',ko:'근처에 새 편의점이 생겼습니다.'},
-  {no:28,day:2,w:'建物',r:'たてもの',m:'건물',ex:'あの高い建物は病院です。',ko:'저 높은 건물은 병원입니다.'},
-  {no:29,day:2,w:'屋上',r:'おくじょう',m:'옥상',ex:'屋上から町がよく見えます。',ko:'옥상에서 마을이 잘 보입니다.'},
-  {no:30,day:2,w:'玄関',r:'げんかん',m:'현관',ex:'玄関で靴を脱いでください。',ko:'현관에서 신발을 벗어 주세요.'},
-  {no:31,day:2,w:'廊下',r:'ろうか',m:'복도',ex:'廊下を走ってはいけません。',ko:'복도에서 뛰면 안 됩니다.'},
-  {no:32,day:2,w:'階段',r:'かいだん',m:'계단',ex:'階段で三階まで上がりました。',ko:'계단으로 3층까지 올라갔습니다.'},
-  {no:33,day:2,w:'壁',r:'かべ',m:'벽',ex:'壁に家族の写真をかけました。',ko:'벽에 가족사진을 걸었습니다.'},
-  {no:34,day:2,w:'庭',r:'にわ',m:'정원, 뜰',ex:'庭にきれいな花が咲いています。',ko:'정원에 예쁜 꽃이 피어 있습니다.'},
-  {no:35,day:2,w:'台所',r:'だいどころ',m:'부엌',ex:'母は台所で料理をしています。',ko:'어머니는 부엌에서 요리를 하고 있습니다.'},
-  {no:36,day:2,w:'風呂',r:'ふろ',m:'목욕; 욕조',ex:'毎晩お風呂に入ります。',ko:'매일 밤 목욕을 합니다.'},
-  {no:37,day:2,w:'押し入れ',r:'おしいれ',m:'붙박이장',ex:'布団を押し入れにしまいます。',ko:'이불을 붙박이장에 넣습니다.'},
-  {no:38,day:2,w:'布団',r:'ふとん',m:'이불, 침구',ex:'寝る前に布団を敷きます。',ko:'자기 전에 이불을 깝니다.'},
-  {no:39,day:2,w:'畳',r:'たたみ',m:'다다미',ex:'この部屋には畳が六枚あります。',ko:'이 방에는 다다미가 여섯 장 있습니다.'},
-  {no:40,day:2,w:'棚',r:'たな',m:'선반',ex:'本を棚に並べました。',ko:'책을 선반에 진열했습니다.'},
-  {no:41,day:2,w:'引き出し',r:'ひきだし',m:'서랍',ex:'はさみは机の引き出しに入っています。',ko:'가위는 책상 서랍에 들어 있습니다.'},
-  {no:42,day:2,w:'鏡',r:'かがみ',m:'거울',ex:'出かける前に鏡を見ます。',ko:'외출하기 전에 거울을 봅니다.'},
-  {no:43,day:2,w:'冷蔵庫',r:'れいぞうこ',m:'냉장고',ex:'冷蔵庫にジュースが入っています。',ko:'냉장고에 주스가 들어 있습니다.'},
-  {no:44,day:2,w:'洗濯機',r:'せんたくき',m:'세탁기',ex:'洗濯機が壊れてしまいました。',ko:'세탁기가 고장 나 버렸습니다.'},
-  {no:45,day:2,w:'掃除機',r:'そうじき',m:'청소기',ex:'週末に部屋に掃除機をかけます。',ko:'주말에 방에 청소기를 돌립니다.'},
-  {no:46,day:2,w:'電灯',r:'でんとう',m:'전등',ex:'暗いので電灯をつけてください。',ko:'어두우니까 전등을 켜 주세요.'},
-  {no:47,day:2,w:'道具',r:'どうぐ',m:'도구',ex:'この道具は何に使いますか。',ko:'이 도구는 무엇에 사용합니까?'},
-  {no:48,day:2,w:'ごみ',r:'ごみ',m:'쓰레기',ex:'ごみは月曜日の朝に出します。',ko:'쓰레기는 월요일 아침에 내놓습니다.'},
-  {no:49,day:2,w:'アパート',r:'あぱーと',m:'아파트, 공동주택',ex:'駅の近くのアパートに住んでいます。',ko:'역 근처 아파트에 살고 있습니다.'},
-  {no:50,day:2,w:'エアコン',r:'えあこん',m:'에어컨',ex:'暑いのでエアコンをつけました。',ko:'더워서 에어컨을 켰습니다.'},
-  {no:51,day:3,w:'食事',r:'しょくじ',m:'식사',ex:'家族と一緒に食事をしました。',ko:'가족과 함께 식사를 했습니다.'},
-  {no:52,day:3,w:'朝食',r:'ちょうしょく',m:'아침 식사',ex:'朝食はパンとコーヒーです。',ko:'아침 식사는 빵과 커피입니다.'},
-  {no:53,day:3,w:'昼食',r:'ちゅうしょく',m:'점심 식사',ex:'昼食は会社の近くで食べます。',ko:'점심 식사는 회사 근처에서 먹습니다.'},
-  {no:54,day:3,w:'夕食',r:'ゆうしょく',m:'저녁 식사',ex:'七時に夕食を食べましょう。',ko:'7시에 저녁 식사를 합시다.'},
-  {no:55,day:3,w:'米',r:'こめ',m:'쌀',ex:'この店では米を安く売っています。',ko:'이 가게에서는 쌀을 싸게 팔고 있습니다.'},
-  {no:56,day:3,w:'味',r:'あじ',m:'맛',ex:'このスープは味が薄いです。',ko:'이 수프는 맛이 싱겁습니다.'},
-  {no:57,day:3,w:'塩',r:'しお',m:'소금',ex:'塩を少し入れてください。',ko:'소금을 조금 넣어 주세요.'},
-  {no:58,day:3,w:'砂糖',r:'さとう',m:'설탕',ex:'コーヒーに砂糖を入れますか。',ko:'커피에 설탕을 넣습니까?'},
-  {no:59,day:3,w:'しょうゆ',r:'しょうゆ',m:'간장',ex:'刺身にしょうゆをつけて食べます。',ko:'회에 간장을 찍어 먹습니다.'},
-  {no:60,day:3,w:'みそ',r:'みそ',m:'된장, 미소',ex:'毎朝みそ汁を飲みます。',ko:'매일 아침 된장국을 마십니다.'},
-  {no:61,day:3,w:'油',r:'あぶら',m:'기름',ex:'フライパンに油を少し入れます。',ko:'프라이팬에 기름을 조금 넣습니다.'},
-  {no:62,day:3,w:'肉',r:'にく',m:'고기',ex:'弟は野菜より肉が好きです。',ko:'남동생은 채소보다 고기를 좋아합니다.'},
-  {no:63,day:3,w:'魚',r:'さかな',m:'생선, 물고기',ex:'川で魚を釣りました。',ko:'강에서 물고기를 낚았습니다.'},
-  {no:64,day:3,w:'野菜',r:'やさい',m:'채소',ex:'野菜をたくさん食べましょう。',ko:'채소를 많이 먹읍시다.'},
-  {no:65,day:3,w:'果物',r:'くだもの',m:'과일',ex:'いちばん好きな果物はりんごです。',ko:'가장 좋아하는 과일은 사과입니다.'},
-  {no:66,day:3,w:'卵',r:'たまご',m:'달걀',ex:'卵を二つ買ってきてください。',ko:'달걀을 두 개 사 와 주세요.'},
-  {no:67,day:3,w:'牛乳',r:'ぎゅうにゅう',m:'우유',ex:'毎朝牛乳を一杯飲みます。',ko:'매일 아침 우유를 한 잔 마십니다.'},
-  {no:68,day:3,w:'お湯',r:'おゆ',m:'뜨거운 물',ex:'お湯を沸かしてお茶をいれます。',ko:'물을 끓여서 차를 탑니다.'},
-  {no:69,day:3,w:'お菓子',r:'おかし',m:'과자',ex:'子どもたちにお菓子をあげました。',ko:'아이들에게 과자를 주었습니다.'},
-  {no:70,day:3,w:'弁当',r:'べんとう',m:'도시락',ex:'毎朝弁当を作って会社に行きます。',ko:'매일 아침 도시락을 싸서 회사에 갑니다.'},
-  {no:71,day:3,w:'サラダ',r:'さらだ',m:'샐러드',ex:'昼はサラダだけ食べました。',ko:'점심은 샐러드만 먹었습니다.'},
-  {no:72,day:3,w:'ステーキ',r:'すてーき',m:'스테이크',ex:'誕生日にステーキを食べました。',ko:'생일에 스테이크를 먹었습니다.'},
-  {no:73,day:3,w:'ジャム',r:'じゃむ',m:'잼',ex:'パンにジャムを塗ります。',ko:'빵에 잼을 바릅니다.'},
-  {no:74,day:3,w:'食料品',r:'しょくりょうひん',m:'식료품',ex:'食料品は地下一階で売っています。',ko:'식료품은 지하 1층에서 팔고 있습니다.'},
-  {no:75,day:3,w:'ごちそう',r:'ごちそう',m:'진수성찬, 맛있는 음식',ex:'お正月にはごちそうを食べます。',ko:'설날에는 맛있는 음식을 먹습니다.'}
-];
-const W = Object.fromEntries(WORDS.map(w => [w.no, w]));
-const DAYS = {2: 'DAY 02 · 장소', 3: 'DAY 03 · 식사'};
 const MAX_ROUND = 5;
-const KEY = 'hoedok-jlpt-v1';
 const isKana = s => /^[぀-ヿ]+$/.test(s);
 const pad = n => String(n).padStart(3, '0');
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+};
 
-/* ---------- state ---------- */
+/* ---------- server ---------- */
+async function api(method, url, body) {
+  const r = await fetch(url, {method, headers: body ? {'Content-Type': 'application/json'} : {}, body: body ? JSON.stringify(body) : undefined});
+  let j = null; try { j = await r.json(); } catch (e) {}
+  if (!r.ok) throw new Error(j?.error || `서버 오류가 났어요 (${r.status}).`);
+  return j;
+}
+
+/* ---------- app-wide state ---------- */
+let view = 'home';            // home | app | upload
+let decks = null, decksError = null, renaming = null;
+let DECK = null, WORDS = [], W = {};
+let S = null;                  // 선택한 차수의 학습 상태 (브라우저에 차수별로 저장)
+let U = null;                  // 사진 업로드 상태
+const opened = new Set();
+const deckKey = id => `hoedok-jlpt-v2:deck:${id}`;
+const sigOf = words => words.map(w => w.w).join('|');
+
+/* ---------- deck & study state ---------- */
 function buildSets(round, confused) {
   const sets = [];
   if (round > 1) {
-    const ids = Object.keys(confused).map(Number).sort((a, b) => confused[b] - confused[a] || a - b);
+    const ids = Object.keys(confused).map(Number).filter(id => W[id]).sort((a, b) => confused[b] - confused[a] || a - b);
     for (let i = 0; i < ids.length; i += 10) sets.push({kind: 'review', ids: ids.slice(i, i + 10)});
   }
-  for (let i = 0; i < 5; i++) sets.push({kind: 'regular', ids: WORDS.slice(i * 10, i * 10 + 10).map(w => w.no)});
+  for (let i = 0; i < WORDS.length; i += 10) sets.push({kind: 'regular', ids: WORDS.slice(i, i + 10).map(w => w.no)});
   return sets;
 }
 function fresh() {
-  return {v: 1, started: false, round: 1, setIdx: 0, phase: 'study', sets: buildSets(1, {}),
+  return {v: 2, sig: sigOf(WORDS), started: false, round: 1, setIdx: 0, phase: 'study', sets: buildSets(1, {}),
           confused: {}, misses: {}, marks: {}, quiz: null, last: null, history: [], hide: false, tab: 'learn'};
 }
-function load() {
-  try { const o = JSON.parse(localStorage.getItem(KEY)); if (o && o.v === 1 && o.sets) return o; } catch (e) {}
-  return fresh();
+// 예전 버전(1차수 50단어 고정)에서 공부한 기록을 1차수로 옮긴다.
+function migrateV1() {
+  const o = store.get('hoedok-jlpt-v1');
+  if (!o || !o.sets) return null;
+  const byLabel = Object.fromEntries(WORDS.map(w => [w.label, w.no]));
+  const map = n => byLabel[pad(n)];
+  if (!WORDS.length || Object.keys(byLabel).length !== 50 || !map(26) || !map(75)) return null;
+  const remap = obj => Object.fromEntries(Object.entries(obj || {}).map(([k, v]) => [map(+k), v]).filter(([k]) => k));
+  const st = {...fresh(), started: o.started, round: o.round, setIdx: o.setIdx, phase: o.phase === 'quiz' ? 'check' : o.phase,
+    sets: o.sets.map(s => ({kind: s.kind, ids: s.ids.map(map).filter(Boolean)})), confused: remap(o.confused), misses: remap(o.misses),
+    marks: remap(o.marks), last: o.last, history: o.history || [], hide: !!o.hide};
+  if (st.phase === 'result' && !st.last) st.phase = 'study';
+  store.del('hoedok-jlpt-v1');
+  return st;
 }
-function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
-let S = load();
-const opened = new Set();
+function loadState() {
+  const o = store.get(deckKey(DECK.id));
+  if (o && o.v === 2 && o.sig === sigOf(WORDS) && o.sets) return o;
+  return (DECK.source_file === '261012_JLPTN4단어_D1.txt' && migrateV1()) || fresh();
+}
+function save() { if (S && DECK) store.set(deckKey(DECK.id), S); }
+function deckProgress(d) {
+  const o = store.get(deckKey(d.id));
+  if (!o || o.v !== 2) return {round: 0, text: '아직 시작 전'};
+  if (o.phase === 'complete') return {round: MAX_ROUND, text: '5회독 완주'};
+  return {round: o.round - 1, text: o.phase === 'roundEnd' ? `${o.round}회독 완료` : `${o.round}회독 · ${Math.min(o.setIdx + 1, o.sets.length)}/${o.sets.length}세트`};
+}
+
+async function loadDecks() {
+  decksError = null;
+  try { decks = (await api('GET', '/api/decks')).decks; }
+  catch (e) { decksError = e.message; }
+  if (view === 'home') render();
+}
+async function openDeck(id) {
+  const d = decks?.find(x => x.id === id);
+  DECK = d || {id, name: '차수'};
+  view = 'app'; S = null; render(true);
+  try {
+    const j = await api('GET', `/api/deck?id=${id}`);
+    DECK = j.deck;
+    WORDS = j.words.map((w, i) => ({no: i + 1, label: w.no_label, w: w.word, r: w.reading || w.word, m: w.meaning, ex: w.example, ko: w.example_ko, sec: w.section}));
+    W = Object.fromEntries(WORDS.map(w => [w.no, w]));
+    opened.clear();
+    S = loadState();
+    render(true);
+  } catch (e) {
+    view = 'home'; render(true); toast(e.message);
+  }
+}
+function goHome() { view = 'home'; S = null; DECK = null; render(true); loadDecks(); }
 
 const curSet = () => S.sets[S.setIdx];
 function setLabel(i) {
@@ -332,39 +399,38 @@ function setLabel(i) {
     return {title: `오답 노트 세트 ${k}`, range: `헷갈린 단어 ${s.ids.length}개`};
   }
   const k = S.sets.slice(0, i + 1).filter(x => x.kind === 'regular').length;
-  return {title: `${k}세트`, range: `${(k - 1) * 10 + 1}–${k * 10}번 · No.${pad(s.ids[0])}–${pad(s.ids[s.ids.length - 1])}`};
+  const a = W[s.ids[0]], b = W[s.ids[s.ids.length - 1]];
+  return {title: `${k}세트`, range: `${a.no}–${b.no}번${a.label && b.label ? ` · No.${a.label}–${b.label}` : ''}`};
 }
 
-/* ---------- quiz ---------- */
-function pickFrom(pool, n, correct) {
+/* ---------- quiz: 일본어 단어(한자)를 보고 한국어 뜻 고르기 ---------- */
+function pickFrom(pool, n, exclude) {
   const out = [];
-  for (const x of shuffle(pool)) { if (x !== correct && !out.includes(x)) out.push(x); if (out.length === n) break; }
+  for (const x of shuffle(pool)) { if (!exclude.includes(x) && !out.includes(x)) out.push(x); if (out.length === n) break; }
   return out;
 }
-// 모든 문제는 일본어 단어(한자)를 보여주고 한국어 뜻을 고르는 형식. 같은 단어가 세 번, 보기 구성만 달리 나온다.
 function makeQ(id, type, setIds) {
   const w = W[id];
   const answer = w.m;
+  if (type === 'context' && !(w.ex && w.ex.includes(w.w))) type = 'meaning';
   let label, note, sentence = null, pool;
   if (type === 'context') {
     label = '예문 속 뜻'; note = '밑줄 친 단어의 뜻은?'; sentence = w.ex;
-    pool = WORDS.filter(x => x.day === w.day).map(x => x.m);
+    pool = WORDS.filter(x => x.sec === w.sec).map(x => x.m);
   } else if (type === 'set') {
     label = '헷갈리는 보기'; note = '같은 세트 단어 중에서 골라 보세요';
-    pool = setIds.length >= 4 ? setIds.map(x => W[x].m) : WORDS.map(x => x.m);
+    pool = setIds.map(x => W[x].m);
   } else {
     label = '뜻 고르기'; note = '알맞은 한국어 뜻을 고르세요';
     pool = WORDS.map(x => x.m);
   }
-  const opts = shuffle([answer, ...pickFrom(pool, 3, answer)]);
-  return {id, type, label, prompt: w.w, sentence, note, opts, answer, picked: null};
+  let wrong = pickFrom(pool, 3, [answer]);
+  if (wrong.length < 3) wrong = wrong.concat(pickFrom(WORDS.map(x => x.m), 3 - wrong.length, [answer, ...wrong]));
+  return {id, type, label, prompt: w.w, sentence, note, opts: shuffle([answer, ...wrong]), answer, picked: null};
 }
 function buildQuiz(ids) {
   const qs = [];
-  for (const id of ids) {
-    qs.push(makeQ(id, 'meaning', ids), makeQ(id, 'context', ids), makeQ(id, 'set', ids));
-  }
-  // spread the three questions of the same word apart
+  for (const id of ids) qs.push(makeQ(id, 'meaning', ids), makeQ(id, 'context', ids), makeQ(id, 'set', ids));
   let best = shuffle(qs);
   for (let t = 0; t < 30; t++) {
     const c = shuffle(qs); let clash = 0;
@@ -386,15 +452,11 @@ function parseMarks(text, ids) {
       if (m[3]) nums.push(+m[3]);
       else for (let n = +m[1]; n <= +m[2] && nums.length < 100; n++) nums.push(n);
     }
-    for (const n of nums) {
-      const id = n >= 1 && n <= ids.length ? ids[n - 1] : ids.includes(n) ? n : null;
-      if (id != null) res[id] = kind;
-    }
+    for (const n of nums) if (n >= 1 && n <= ids.length) res[ids[n - 1]] = kind;
   }
   return res;
 }
 
-/* ---------- speech ---------- */
 function say(text) {
   try {
     if (!('speechSynthesis' in window)) return toast('이 브라우저는 음성 재생을 지원하지 않아요');
@@ -403,28 +465,95 @@ function say(text) {
   } catch (e) {}
 }
 
+/* ---------- photo upload ---------- */
+function freshUpload() {
+  const n = (decks?.length || 0) + 1;
+  return {step: 'pick', name: `${n}차수`, files: [], busy: false, status: '', error: '', words: []};
+}
+async function prepImage(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    await new Promise((ok, no) => { img.onload = ok; img.onerror = () => no(new Error('사진을 열 수 없어요. JPG나 PNG 사진을 골라 주세요.')); img.src = url; });
+    const sc = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement('canvas');
+    c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    const dataUrl = c.toDataURL('image/jpeg', 0.85);
+    return {name: file.name, dataUrl, b64: dataUrl.split(',')[1]};
+  } finally { URL.revokeObjectURL(url); }
+}
+async function addFiles(list) {
+  const files = [...list].filter(f => f.type.startsWith('image/'));
+  if (!files.length) { toast('사진 파일을 골라 주세요'); return; }
+  U.error = '';
+  const room = Math.max(0, 5 - U.files.length);
+  if (files.length > room) toast('사진은 한 번에 5장까지 올릴 수 있어요');
+  for (const f of files.slice(0, room)) {
+    try { U.files.push(await prepImage(f)); } catch (e) { U.error = e.message; }
+  }
+  render();
+}
+async function recognize() {
+  if (!U.files.length || U.busy) return;
+  U.busy = true; U.error = ''; const found = [];
+  try {
+    for (let i = 0; i < U.files.length; i++) {
+      U.status = `사진 ${i + 1}/${U.files.length}에서 단어를 찾는 중이에요. 장당 20~40초쯤 걸려요.`; render();
+      const j = await api('POST', '/api/recognize', {image: U.files[i].b64, mediaType: 'image/jpeg'});
+      found.push(...j.words);
+    }
+    const seen = new Set();
+    U.words = found.filter(w => { const k = w.word + '|' + w.meaning; if (seen.has(k)) return false; seen.add(k); return true; });
+    if (!U.words.length) U.error = '사진에서 일본어 단어를 찾지 못했어요. 단어가 잘 보이게 다시 찍어 주세요.';
+    else U.step = 'review';
+  } catch (e) { U.error = e.message; }
+  U.busy = false; U.status = ''; render(true);
+}
+async function saveUpload() {
+  const name = U.name.trim();
+  const words = U.words.filter(w => w.word.trim() && w.meaning.trim());
+  if (!name) { U.error = '차수 이름을 입력해 주세요.'; render(); return; }
+  if (words.length < 4) { U.error = '퀴즈 보기를 만들려면 단어와 뜻이 있는 줄이 4개 이상 필요해요.'; render(); return; }
+  U.busy = true; U.error = ''; U.status = 'DB에 저장하는 중이에요.'; render();
+  try {
+    const j = await api('POST', '/api/decks', {name, words});
+    U = null; await loadDecks(); toast(`'${j.deck.name}' 차수를 저장했어요`); openDeck(j.deck.id);
+  } catch (e) { U.busy = false; U.status = ''; U.error = e.message; render(); }
+}
+
 /* ---------- render ---------- */
 const ICON = {
   speak: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>',
   more: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>',
+  back: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  camera: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
   learn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 8h7M9 12h5"/></svg>',
   notes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9.5 13.5l5 5M14.5 13.5l-5 5"/></svg>',
-  words: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg>'
+  words: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg>',
+  decks: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>'
 };
 
-function tally(round, finished) {
-  // 正 — five strokes, one per 회독
+function tally(doneCount, current) {
+  // 正 — 다섯 획, 회독 하나에 한 획
   const L = [[14,14,86,14],[50,14,50,86],[50,50,80,50],[24,44,24,86],[8,86,92,86]];
-  const doneCount = finished ? MAX_ROUND : round - 1;
   return `<svg class="tally" viewBox="0 0 100 100" role="img" aria-label="${doneCount}회독 완료">` +
     L.map((l, i) => {
-      const st = i < doneCount ? 'var(--stamp)' : i === doneCount ? 'var(--ai)' : 'var(--line)';
-      const dash = i === doneCount && !finished ? ' stroke-dasharray="8 9"' : '';
+      const st = i < doneCount ? 'var(--stamp)' : i === doneCount && current ? 'var(--ai)' : 'var(--line)';
+      const dash = i === doneCount && current ? ' stroke-dasharray="8 9"' : '';
       return `<line x1="${l[0]}" y1="${l[1]}" x2="${l[2]}" y2="${l[3]}" stroke="${st}"${dash}/>`;
     }).join('') + '</svg>';
 }
 
 function renderTop() {
+  const top = document.getElementById('top');
+  if (view !== 'app' || !S) {
+    const sub = view === 'upload' ? '사진으로 새 차수 만들기' : view === 'app' ? `${esc(DECK?.name)} 불러오는 중` : 'JLPT N4 · 차수를 골라 시작하세요';
+    top.innerHTML = `${view === 'home' ? tally(0, false) : `<button class="iconbtn" data-act="home" aria-label="차수 선택으로">${ICON.back}</button>`}
+      <div class="brand"><b>회독 <em>JLPT</em></b><small>${sub}</small></div>
+      <div class="stamp" aria-hidden="true"><div><span>N4</span><small>단어장</small></div></div>`;
+    return;
+  }
   const done = S.phase === 'complete';
   let bar = '';
   if (S.tab === 'learn' && !done) {
@@ -433,9 +562,9 @@ function renderTop() {
       `<span class="seg ${s.kind}${i < S.setIdx || (i === S.setIdx && S.phase === 'result') ? ' done' : i === S.setIdx ? ' now' : ''}"></span>`).join('')}</div>
       <div class="setmeta"><span>${S.phase === 'roundEnd' ? `${S.round}회독 완료` : `${lab.title} · ${phaseName()}`}</span><span>${Math.min(S.setIdx + 1, S.sets.length)} / ${S.sets.length} 세트</span></div>`;
   }
-  document.getElementById('top').innerHTML = `
-    ${tally(S.round, done)}
-    <div class="brand"><b>회독 <em>JLPT</em></b><small>N4 · DAY 02–03 · 50단어</small></div>
+  top.innerHTML = `
+    ${tally(done ? MAX_ROUND : S.round - 1, !done)}
+    <div class="brand"><b>회독 <em>JLPT</em></b><small>${esc(DECK.name)} · ${WORDS.length}단어</small></div>
     <div class="stamp" title="현재 회독"><div><span>${done ? '完' : S.round}</span><small>${done ? '5회독' : '회독'}</small></div></div>
     <button class="iconbtn" data-act="menu" aria-label="설정">${ICON.more}</button>
     ${bar ? `<div class="barwrap">${bar}</div>` : ''}`;
@@ -443,20 +572,78 @@ function renderTop() {
 function phaseName() {
   return {study: '단어 학습', check: '암기 체크', quiz: '미니 퀴즈', result: '채점 결과'}[S.phase] || '';
 }
-
 function coach(html) {
   return `<div class="coach"><div class="avatar" aria-hidden="true">回</div><div class="bubble"><span class="who">AI 단어장 코치</span>${html}</div></div>`;
 }
 
+function viewHome() {
+  let list;
+  if (decksError) list = `<div class="status err">${esc(decksError)}</div><div class="actions"><button class="btn ghost" data-act="retryDecks">다시 불러오기</button></div>`;
+  else if (!decks) list = `<p class="loading"><span class="spin"></span>차수 목록을 불러오는 중이에요</p>`;
+  else if (!decks.length) list = `<div class="empty">아직 차수가 없어요.<br>아래에서 사진으로 첫 차수를 만들어 보세요.</div>`;
+  else list = `<div class="decks">${decks.map(d => {
+    const p = deckProgress(d);
+    const sub = d.source === 'file' && d.source_file
+      ? `${esc(d.source_file.replace(/\.txt$/, '').replace(/_/g, ' · '))}`
+      : `사진으로 만든 차수 · ${new Date(d.created_at).toLocaleDateString('ko-KR')}`;
+    const seal = (d.name.match(/\d+/) || [d.name.slice(0, 1)])[0];
+    return `<article class="deck${d.source === 'photo' ? ' photo' : ''}">
+      ${renaming === d.id
+        ? `<form class="inline" data-form="rename" data-id="${d.id}"><input id="renameInput" maxlength="40" value="${esc(d.name)}" aria-label="새 차수 이름"><button class="btn small" type="submit">저장</button><button class="btn ghost small" type="button" data-act="renameCancel">취소</button></form>`
+        : `<button class="deck-main" data-act="openDeck" data-id="${d.id}">
+            <span class="deck-seal" aria-hidden="true">${esc(seal)}</span>
+            <span class="deck-info"><b>${esc(d.name)}</b><small>${sub} · ${d.word_count}단어</small></span>
+            <span class="deck-go">학습 ›</span></button>`}
+      <div class="deck-prog" aria-label="진도 ${esc(p.text)}">${[0,1,2,3,4].map(i => `<i class="${i < p.round ? 'on' : ''}"></i>`).join('')}<span>${esc(p.text)}</span></div>
+      <div class="deck-tools">
+        <button class="linkbtn" data-act="renameStart" data-id="${d.id}">이름 바꾸기</button>
+        ${d.source === 'photo' ? `<button class="linkbtn del" data-act="deleteDeck" data-id="${d.id}">삭제</button>` : ''}
+      </div></article>`;
+  }).join('')}</div>`;
+  return coach(`<p><b>회독 JLPT에 오신 걸 환영해요!</b> 공부할 차수를 골라 주세요.</p>
+      <p>차수마다 10개씩 세트로 보고, 암기 체크와 30문제 퀴즈를 거쳐 5회독까지 진행해요. 진도는 차수별로 따로 저장돼요.</p>`) +
+    `<h2 class="settitle">차수 선택</h2>` + list +
+    `<button class="newdeck" data-act="upload">${ICON.camera}<span>사진으로 새 차수 만들기<small>단어장 사진을 찍으면 단어, 읽는 법, 뜻을 자동으로 정리해요</small></span></button>`;
+}
+
+function viewUpload() {
+  const u = U;
+  const status = (u.status ? `<div class="status"><span class="spin"></span>${esc(u.status)}</div>` : '') + (u.error ? `<div class="status err">${esc(u.error)}</div>` : '');
+  const nameField = `<label class="field"><span>차수 이름</span><input id="deckName" data-up="name" maxlength="40" value="${esc(u.name)}" placeholder="예: 3차수, DAY 05 교통"><small>홈 화면에 이 이름으로 보여요. 나중에 바꿀 수 있어요.</small></label>`;
+  if (u.step === 'pick') {
+    return coach(`<p>단어장이나 노트 사진을 올려 주세요. 사진 속 <b>일본어 단어, 읽는 법, 한국어 뜻</b>을 찾아 정리하고, 예문도 함께 만들어 드려요.</p>
+        <p>인식 결과는 저장하기 전에 직접 고칠 수 있어요.</p>`) + nameField + `
+      <label class="drop">${ICON.camera}<b>사진 찍기 또는 앨범에서 고르기</b><span>한 번에 5장까지 · 글자가 또렷하게 보이도록 찍어 주세요</span>
+        <input id="photoInput" type="file" accept="image/*" multiple data-up="files"></label>
+      ${u.files.length ? `<div class="thumbs">${u.files.map((f, i) => `<div class="thumb"><img src="${f.dataUrl}" alt="올린 사진 ${i + 1}"><button data-act="removeFile" data-i="${i}" aria-label="사진 ${i + 1} 빼기" ${u.busy ? 'disabled' : ''}>×</button></div>`).join('')}</div>` : ''}
+      ${status}
+      <div class="actions"><button class="btn" data-act="recognize" ${!u.files.length || u.busy ? 'disabled' : ''}>${u.busy ? '인식하는 중…' : u.files.length ? `사진 ${u.files.length}장에서 단어 인식하기` : '먼저 사진을 올려 주세요'}</button>
+      <button class="btn ghost" data-act="home">취소</button></div>`;
+  }
+  return coach(`<p>단어 <b>${u.words.length}개</b>를 찾았어요. 틀린 글자가 있으면 고치고, 필요 없는 줄은 ×로 지워 주세요.</p><p>저장하면 DB에 새 차수로 등록되고 바로 학습을 시작해요.</p>`) + nameField + `
+    <div class="edits">${u.words.map((w, i) => `<div class="edit">
+      <span class="n">${i + 1}</span>
+      <input class="jp" lang="ja" data-up="word" data-i="${i}" value="${esc(w.word)}" placeholder="단어" aria-label="${i + 1}번 단어">
+      <input lang="ja" data-up="reading" data-i="${i}" value="${esc(w.reading)}" placeholder="읽는 법" aria-label="${i + 1}번 읽는 법">
+      <input class="mean" data-up="meaning" data-i="${i}" value="${esc(w.meaning)}" placeholder="뜻" aria-label="${i + 1}번 뜻">
+      <button class="x" data-act="delRow" data-i="${i}" aria-label="${i + 1}번 줄 지우기">×</button>
+      <input class="ex" lang="ja" data-up="example" data-i="${i}" value="${esc(w.example)}" placeholder="예문 (선택)" aria-label="${i + 1}번 예문">
+    </div>`).join('')}</div>
+    <div class="actions"><button class="btn ghost" data-act="addRow">+ 단어 줄 추가</button></div>
+    ${status}
+    <div class="actions"><button class="btn" data-act="saveDeck" ${u.busy ? 'disabled' : ''}>DB에 저장하고 학습 시작</button>
+    <button class="btn ghost" data-act="backToPick" ${u.busy ? 'disabled' : ''}>사진 다시 고르기</button></div>`;
+}
+
 function cardHTML(id, i) {
   const w = W[id];
-  const ex = esc(w.ex).replace(esc(w.w), `<mark>${esc(w.w)}</mark>`);
+  const ex = w.ex ? esc(w.ex).replace(esc(w.w), `<mark>${esc(w.w)}</mark>`) : '';
   const miss = S.confused[id];
   return `<article class="card${opened.has(id) ? ' open' : ''}${miss ? ' hardmark' : ''}" data-act="reveal" data-id="${id}">
-    <div class="card-top"><span class="idx">[${i + 1}]</span><span>No.${pad(id)}</span>${miss ? `<span class="tag">헷갈림 ${miss}회</span>` : ''}
-      <button class="iconbtn" data-act="say" data-text="${esc(w.w)}" aria-label="${esc(w.w)} 발음 듣기">${ICON.speak}</button></div>
+    <div class="card-top"><span class="idx">[${i + 1}]</span>${w.label ? `<span>No.${esc(w.label)}</span>` : ''}${miss ? `<span class="tag">헷갈림 ${miss}회</span>` : ''}
+      <button class="iconbtn" data-act="say" data-id="${id}" aria-label="${esc(w.w)} 발음 듣기">${ICON.speak}</button></div>
     <div class="line"><span class="jp" lang="ja">${esc(w.w)}</span><span class="sep">|</span><span class="kana" lang="ja">${esc(w.r)}</span><span class="sep">|</span><span class="mean">${esc(w.m)}</span></div>
-    <p class="ex"><span class="ja" lang="ja">${ex}</span><span class="ko">${esc(w.ko)}</span></p>
+    ${ex ? `<p class="ex"><span class="ja" lang="ja">${ex}</span><span class="ko">${esc(w.ko)}</span></p>` : ''}
   </article>`;
 }
 
@@ -464,8 +651,8 @@ function viewStudy() {
   const set = curSet(), lab = setLabel(S.setIdx);
   let msg;
   if (!S.started) {
-    msg = `<p><b>회독 JLPT에 오신 걸 환영해요!</b> 오늘은 DAY 02 장소, DAY 03 식사 단어 50개를 5회독으로 완성합니다.</p>
-      <p>10개씩 한 세트로 보고 → 암기 상태 체크 → 30문제 퀴즈 순서로 진행해요. 헷갈린 단어는 오답 노트에 모아서 다음 회독 첫 세트로 다시 나와요. 먼저 1세트부터 시작할게요.</p>`;
+    msg = `<p><b>${esc(DECK.name)}을 시작해요!</b> 단어 ${WORDS.length}개를 10개씩 ${Math.ceil(WORDS.length / 10)}세트로 나눠 5회독으로 완성합니다.</p>
+      <p>단어 보기 → 암기 상태 체크 → 퀴즈 순서로 진행해요. 헷갈린 단어는 오답 노트에 모아서 다음 회독 첫 세트로 다시 나와요. 먼저 1세트부터 시작할게요.</p>`;
   } else if (set.kind === 'review') {
     msg = `<p>${S.round}회독 시작이에요. 지난 회독에서 헷갈렸던 단어부터 먼저 잡고 갈게요. 이번엔 꼭 내 것으로 만들어 봐요.</p>`;
   } else {
@@ -533,12 +720,12 @@ function viewQuiz() {
 }
 
 function viewResult() {
-  const r = S.last, set = curSet();
+  const r = S.last;
   const pct = r.score / r.total;
   const comment = pct >= .9 ? '훌륭해요! 이 세트는 거의 다 잡았어요.' : pct >= .7 ? '좋아요. 틀린 단어만 오답 노트에서 한 번 더 보면 돼요.' : '괜찮아요, 회독은 원래 반복이에요. 틀린 단어는 다음 회독 오답 노트 세트로 먼저 나와요.';
   const isLast = S.setIdx + 1 >= S.sets.length;
   return `<div class="score"><div class="big">${r.score}<small> / ${r.total}</small></div><p>${esc(setLabel(S.setIdx).title)} 미니 퀴즈 · 정답률 ${Math.round(pct * 100)}%</p></div>` +
-    coach(`<p>${comment}</p>${r.added.length ? `<p>오답 노트에 담긴 단어: <b lang="ja">${r.added.map(id => esc(W[id].w)).join(', ')}</b></p>` : '<p>이번 세트에서 오답 노트에 새로 담긴 단어는 없어요.</p>'}
+    coach(`<p>${comment}</p>${r.added.length ? `<p>오답 노트에 담긴 단어: <b lang="ja">${r.added.filter(id => W[id]).map(id => esc(W[id].w)).join(', ')}</b></p>` : '<p>이번 세트에서 오답 노트에 새로 담긴 단어는 없어요.</p>'}
       <p>준비되면 <code>다음</code> 또는 <code>다음 세트</code>라고 입력하세요.</p>`) + `
     <form class="cmd" data-form="next"><input id="nextInput" autocomplete="off" placeholder="다음" aria-label="코치에게 말하기"><button class="btn" type="submit">보내기</button></form>
     <div class="actions"><button class="btn" data-act="nextSet">${isLast ? `${S.round}회독 마무리하기` : '다음 세트로'}</button></div>
@@ -551,8 +738,8 @@ function viewRoundEnd() {
   const sc = rh.reduce((a, h) => a + h.score, 0), tot = rh.reduce((a, h) => a + h.total, 0);
   const nconf = Object.keys(S.confused).length;
   const last = S.round >= MAX_ROUND;
-  return coach(`<p><b>${S.round}회독 완료!</b> ${last ? '드디어 5회독까지 모두 마쳤어요.' : `50단어를 한 바퀴 돌았어요. 이제 ${S.round + 1}회독으로 넘어갑니다.`}</p>
-    ${!last ? (nconf ? `<p>${S.round + 1}회독은 헷갈린 단어 ${nconf}개로 만든 <b>오답 노트 세트</b>부터 시작하고, 이어서 50단어 전체를 다시 봐요.</p>` : `<p>오답 노트가 비어 있어요. ${S.round + 1}회독은 50단어 전체 복습으로 바로 들어가요.</p>`) : ''}`) + `
+  return coach(`<p><b>${S.round}회독 완료!</b> ${last ? '드디어 5회독까지 모두 마쳤어요.' : `${WORDS.length}단어를 한 바퀴 돌았어요. 이제 ${S.round + 1}회독으로 넘어갑니다.`}</p>
+    ${!last ? (nconf ? `<p>${S.round + 1}회독은 헷갈린 단어 ${nconf}개로 만든 <b>오답 노트 세트</b>부터 시작하고, 이어서 ${WORDS.length}단어 전체를 다시 봐요.</p>` : `<p>오답 노트가 비어 있어요. ${S.round + 1}회독은 전체 복습으로 바로 들어가요.</p>`) : ''}`) + `
     <div class="stats">
       <div class="stat"><b>${tot ? Math.round(sc / tot * 100) : 0}%</b><small>${S.round}회독 정답률</small></div>
       <div class="stat"><b>${rh.length}</b><small>푼 세트</small></div>
@@ -565,7 +752,7 @@ function viewRoundEnd() {
 function viewComplete() {
   const sc = S.history.reduce((a, h) => a + h.score, 0), tot = S.history.reduce((a, h) => a + h.total, 0);
   const rounds = [1,2,3,4,5].map(r => { const h = S.history.filter(x => x.round === r); const s = h.reduce((a, x) => a + x.score, 0), t = h.reduce((a, x) => a + x.total, 0); return t ? Math.round(s / t * 100) : 0; });
-  return coach(`<p><b>5회독 완주를 축하해요!</b> 正 다섯 획을 모두 채웠어요. 50단어를 다섯 번 보고, 퀴즈로 ${tot}문제를 풀었어요.</p>
+  return coach(`<p><b>${esc(DECK.name)} 5회독 완주를 축하해요!</b> 正 다섯 획을 모두 채웠어요. 퀴즈로 ${tot}문제를 풀었어요.</p>
     <p>${Object.keys(S.confused).length ? '아직 오답 노트에 남은 단어가 있어요. 오답 노트 탭에서 한 번 더 확인해 보세요.' : '오답 노트까지 깨끗하게 비웠어요. 완벽합니다!'}</p>`) + `
     <div class="stats">
       <div class="stat"><b>${tot ? Math.round(sc / tot * 100) : 0}%</b><small>전체 정답률</small></div>
@@ -573,12 +760,12 @@ function viewComplete() {
       <div class="stat"><b>${Object.keys(S.confused).length}</b><small>남은 오답</small></div>
     </div>
     <div class="list"><h3>회독별 정답률</h3>${rounds.map((p, i) => `<div class="miss"><span class="a">${i + 1}회독 <b>${p}%</b></span></div>`).join('')}</div>
-    <div class="actions"><button class="btn" data-act="menu">처음부터 다시 하기</button></div>`;
+    <div class="actions"><button class="btn" data-act="home">다른 차수 고르기</button><button class="btn ghost" data-act="menu">이 차수 처음부터 다시 하기</button></div>`;
 }
 
 function viewNotes() {
-  const ids = Object.keys(S.confused).map(Number).sort((a, b) => S.confused[b] - S.confused[a] || a - b);
-  const past = Object.keys(S.misses).map(Number).filter(id => !S.confused[id]);
+  const ids = Object.keys(S.confused).map(Number).filter(id => W[id]).sort((a, b) => S.confused[b] - S.confused[a] || a - b);
+  const past = Object.keys(S.misses).map(Number).filter(id => W[id] && !S.confused[id]);
   return `<h2 class="settitle">오답 노트</h2><p class="sub">헷갈림으로 체크했거나 퀴즈에서 틀린 단어예요. 다음 회독의 첫 세트로 먼저 나와요.</p>` +
     (ids.length ? `<div class="cards">${ids.map((id, i) => cardHTML(id, i)).join('')}</div>`
       : `<div class="empty">아직 오답 노트가 비어 있어요.<br>세트를 마치면 헷갈린 단어가 여기에 모여요.</div>`) +
@@ -586,15 +773,19 @@ function viewNotes() {
 }
 
 function viewWords() {
-  return `<h2 class="settitle">전체 단어장</h2><p class="sub">50단어 · 주황색 배지는 오답 노트에 있는 단어예요.</p>` +
-    [2, 3].map(d => `<p class="daylabel">${DAYS[d]}</p><div class="wtable">${WORDS.filter(w => w.day === d).map(w =>
-      `<div class="wrow"><span class="n">${pad(w.no)}</span><span class="jp" lang="ja">${esc(w.w)}<small>${esc(w.r)}</small></span><span>${esc(w.m)}</span>
+  const secs = [...new Set(WORDS.map(w => w.sec))];
+  return `<h2 class="settitle">${esc(DECK.name)} 단어장</h2><p class="sub">${WORDS.length}단어 · 주황색 배지는 오답 노트에 있는 단어예요.</p>` +
+    secs.map(sec => `${sec ? `<p class="daylabel">${esc(sec)}</p>` : '<p class="daylabel">전체 단어</p>'}<div class="wtable">${WORDS.filter(w => w.sec === sec).map(w =>
+      `<div class="wrow"><span class="n">${esc(w.label || w.no)}</span><span class="jp" lang="ja">${esc(w.w)}<small>${esc(w.r)}</small></span><span>${esc(w.m)}</span>
        <span>${S.confused[w.no] ? `<span class="badge">헷갈림 ${S.confused[w.no]}</span>` : ''}</span></div>`).join('')}</div>`).join('');
 }
 
 function renderTabs() {
+  const nav = document.getElementById('tabnav');
+  nav.hidden = !(view === 'app' && S);
+  if (nav.hidden) return;
   const n = Object.keys(S.confused).length;
-  const t = [['learn', '학습', ICON.learn], ['notes', '오답 노트', ICON.notes], ['words', '단어장', ICON.words]];
+  const t = [['learn', '학습', ICON.learn], ['notes', '오답 노트', ICON.notes], ['words', '단어장', ICON.words], ['decks', '차수 선택', ICON.decks]];
   document.getElementById('tabs').innerHTML = t.map(([k, l, ic]) =>
     `<button class="tab" data-act="tab" data-tab="${k}" ${S.tab === k ? 'aria-current="page"' : ''}>${ic}<span>${l}</span>${k === 'notes' && n ? `<span class="dot">${n}</span>` : ''}</button>`).join('');
 }
@@ -602,30 +793,33 @@ function renderTabs() {
 function render(scrollTop) {
   renderTop(); renderTabs();
   let html;
-  if (S.tab === 'notes') html = viewNotes();
+  if (view === 'home') html = viewHome();
+  else if (view === 'upload') html = viewUpload();
+  else if (!S) html = `<p class="loading"><span class="spin"></span>단어를 불러오는 중이에요</p>`;
+  else if (S.tab === 'notes') html = viewNotes();
   else if (S.tab === 'words') html = viewWords();
   else html = ({study: viewStudy, check: viewCheck, quiz: viewQuiz, result: viewResult, roundEnd: viewRoundEnd, complete: viewComplete})[S.phase]();
-  const main = document.getElementById('main');
-  main.innerHTML = `<div class="view">${html}</div>`;
+  document.getElementById('main').innerHTML = `<div class="view">${html}</div>`;
+  document.querySelector('.app').style.paddingBottom = view === 'app' && S ? '' : '32px';
   if (scrollTop) window.scrollTo({top: 0});
   save();
   const nq = document.getElementById('nextQ'); if (nq) nq.focus({preventScroll: true});
+  const ri = document.getElementById('renameInput'); if (ri) { ri.focus(); ri.select(); }
 }
 
 function toast(msg) {
   const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false;
-  clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2200);
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600);
 }
 
-/* ---------- flow ---------- */
+/* ---------- study flow ---------- */
 function finishQuiz() {
   const set = curSet(), qs = S.quiz.qs;
   const wrongBy = {};
   qs.forEach(q => { if (q.picked !== q.answer) wrongBy[q.id] = (wrongBy[q.id] || 0) + 1; });
   const added = [];
   for (const id of set.ids) {
-    const wasHard = S.marks[id] === 'hard', missed = !!wrongBy[id];
-    if (wasHard || missed) {
+    if (S.marks[id] === 'hard' || wrongBy[id]) {
       if (!S.confused[id]) added.push(id);
       S.confused[id] = (S.confused[id] || 0) + 1;
       S.misses[id] = (S.misses[id] || 0) + 1;
@@ -650,21 +844,45 @@ function nextRound() {
   render(true);
 }
 
-function openSheet() {
+function openSheet(html) {
   const sh = document.getElementById('sheet');
-  sh.innerHTML = `<div class="panel" role="dialog" aria-modal="true" aria-labelledby="shT">
-    <h3 id="shT">처음부터 다시 할까요?</h3>
-    <p>회독 진행 상황, 오답 노트, 퀴즈 기록이 모두 지워지고 1회독 1세트로 돌아가요.</p>
-    <button class="btn danger" data-act="reset">모두 지우고 다시 시작</button>
-    <button class="btn ghost" data-act="closeSheet">취소</button></div>`;
+  sh.innerHTML = `<div class="panel" role="dialog" aria-modal="true" aria-labelledby="shT">${html}</div>`;
   sh.hidden = false;
 }
+const closeSheet = () => { document.getElementById('sheet').hidden = true; };
 
 document.addEventListener('click', e => {
-  if (e.target.id === 'sheet') { e.target.hidden = true; return; }
+  if (e.target.id === 'sheet') { closeSheet(); return; }
   const el = e.target.closest('[data-act]'); if (!el) return;
   const a = el.dataset.act;
-  if (a === 'say') { e.stopPropagation(); const w = WORDS.find(x => x.w === el.dataset.text); say(w && !isKana(w.w) ? w.r : el.dataset.text); return; }
+  // home & upload
+  if (a === 'openDeck') { openDeck(+el.dataset.id); return; }
+  if (a === 'home') { U = null; goHome(); return; }
+  if (a === 'retryDecks') { decks = null; render(); loadDecks(); return; }
+  if (a === 'upload') { U = freshUpload(); view = 'upload'; render(true); return; }
+  if (a === 'renameStart') { renaming = +el.dataset.id; render(); return; }
+  if (a === 'renameCancel') { renaming = null; render(); return; }
+  if (a === 'deleteDeck') {
+    const d = decks.find(x => x.id === +el.dataset.id);
+    openSheet(`<h3 id="shT">'${esc(d.name)}' 차수를 삭제할까요?</h3><p>DB에 저장된 단어 ${d.word_count}개와 이 기기의 학습 기록이 함께 지워져요. 되돌릴 수 없어요.</p>
+      <button class="btn danger" data-act="confirmDelete" data-id="${d.id}">삭제하기</button><button class="btn ghost" data-act="closeSheet">취소</button>`);
+    return;
+  }
+  if (a === 'confirmDelete') {
+    const id = +el.dataset.id; closeSheet();
+    api('DELETE', `/api/deck?id=${id}`).then(() => { store.del(deckKey(id)); toast('차수를 삭제했어요'); loadDecks(); }).catch(err => toast(err.message));
+    return;
+  }
+  if (a === 'removeFile') { U.files.splice(+el.dataset.i, 1); render(); return; }
+  if (a === 'recognize') { recognize(); return; }
+  if (a === 'delRow') { U.words.splice(+el.dataset.i, 1); render(); return; }
+  if (a === 'addRow') { U.words.push({word: '', reading: '', meaning: '', example: '', example_ko: '', no: ''}); render(); document.querySelector(`[data-up="word"][data-i="${U.words.length - 1}"]`)?.focus(); return; }
+  if (a === 'saveDeck') { saveUpload(); return; }
+  if (a === 'backToPick') { U.step = 'pick'; U.error = ''; render(true); return; }
+  if (a === 'closeSheet') { closeSheet(); return; }
+  // study
+  if (!S) return;
+  if (a === 'say') { e.stopPropagation(); const w = W[+el.dataset.id]; say(isKana(w.w) ? w.w : w.r); return; }
   if (a === 'reveal') { if (!S.hide) return; const id = +el.dataset.id; opened.has(id) ? opened.delete(id) : opened.add(id); el.classList.toggle('open'); return; }
   if (a === 'hide') { S.hide = !S.hide; opened.clear(); render(); return; }
   if (a === 'toCheck') { S.started = true; S.phase = 'check'; render(true); return; }
@@ -677,16 +895,32 @@ document.addEventListener('click', e => {
   if (a === 'nextSet') { nextSet(); return; }
   if (a === 'nextRound') { nextRound(); return; }
   if (a === 'goNotes') { S.tab = 'notes'; render(true); return; }
-  if (a === 'tab') { S.tab = el.dataset.tab; render(true); return; }
-  if (a === 'menu') { openSheet(); return; }
-  if (a === 'closeSheet') { document.getElementById('sheet').hidden = true; return; }
-  if (a === 'reset') { S = fresh(); opened.clear(); document.getElementById('sheet').hidden = true; render(true); toast('처음부터 다시 시작해요'); return; }
+  if (a === 'tab') { if (el.dataset.tab === 'decks') { goHome(); return; } S.tab = el.dataset.tab; render(true); return; }
+  if (a === 'menu') {
+    openSheet(`<h3 id="shT">${esc(DECK.name)}을 처음부터 다시 할까요?</h3><p>이 차수의 회독 진도, 오답 노트, 퀴즈 기록이 지워지고 1회독 1세트로 돌아가요. 다른 차수의 기록과 DB의 단어는 그대로예요.</p>
+      <button class="btn danger" data-act="reset">이 차수 기록 지우고 다시 시작</button><button class="btn ghost" data-act="closeSheet">취소</button>`);
+    return;
+  }
+  if (a === 'reset') { S = fresh(); opened.clear(); closeSheet(); render(true); toast('처음부터 다시 시작해요'); return; }
+});
+
+document.addEventListener('input', e => {
+  const k = e.target.dataset?.up; if (!k || !U) return;
+  if (k === 'name') U.name = e.target.value;
+  else if (k !== 'files') U.words[+e.target.dataset.i][k] = e.target.value;
+});
+document.addEventListener('change', e => {
+  if (e.target.dataset?.up === 'files' && U) { addFiles(e.target.files); e.target.value = ''; }
 });
 
 document.addEventListener('submit', e => {
   e.preventDefault();
   const f = e.target.dataset.form;
-  if (f === 'marks') {
+  if (f === 'rename') {
+    const id = +e.target.dataset.id, name = document.getElementById('renameInput').value.trim();
+    if (!name) { toast('차수 이름을 입력해 주세요'); return; }
+    api('PATCH', `/api/deck?id=${id}`, {name}).then(() => { renaming = null; toast('이름을 바꿨어요'); loadDecks(); }).catch(err => toast(err.message));
+  } else if (f === 'marks') {
     const v = document.getElementById('markInput').value.trim();
     const res = parseMarks(v, curSet().ids);
     const n = Object.keys(res).length;
@@ -700,13 +934,15 @@ document.addEventListener('submit', e => {
 });
 
 document.addEventListener('keydown', e => {
-  if (S.tab !== 'learn' || S.phase !== 'quiz' || e.target.tagName === 'INPUT') return;
+  if (e.key === 'Escape' && !document.getElementById('sheet').hidden) { closeSheet(); return; }
+  if (view !== 'app' || !S || S.tab !== 'learn' || S.phase !== 'quiz' || e.target.tagName === 'INPUT') return;
   const q = S.quiz.qs[S.quiz.i];
   if (q.picked == null && /^[1-4]$/.test(e.key)) { q.picked = q.opts[+e.key - 1]; render(); }
   else if (q.picked != null && e.key === 'Enter' && document.activeElement?.id !== 'nextQ') document.getElementById('nextQ')?.click();
 });
 
 render();
+loadDecks();
 </script>
 </body>
 </html>

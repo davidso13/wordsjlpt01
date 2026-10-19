@@ -1,0 +1,12 @@
+{
+  "name": "wordsjlpt01",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seed": "node --env-file=.env.local scripts/seed.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
+    "@neondatabase/serverless": "^1.2.0"
+  }
+}
